@@ -3,4 +3,6 @@
 #include "enrutador.h"
 
 string leer (string name);
+void validar(char name);
+
 #endif // FUNCIONES_H

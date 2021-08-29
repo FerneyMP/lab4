@@ -16,3 +16,17 @@ string leer(string nombre)// lectura del archivo de texto
         text.close();
         return datos;
 }
+
+void validar(char name){
+    bool flag=true;
+    int letra;
+    while(flag){
+       letra=name;
+       if ( (letra>=65 && letra<=90)||(letra>=97 && letra<=122 ) ){
+           flag=false;
+       }
+       else {
+           cout << "El nombre de la red debe ser un caracter letra\nIngrese el nombre de la red: "; cin >> name;
+       }
+}
+}

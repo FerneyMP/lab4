@@ -37,7 +37,10 @@ void red::modificar_enrutador(char clave)
         //con clave dada existe y se puede modificar
         cout << "Ingrese el nuevo costo de enlace: ";
         getline(cin,_costo);
+        getline(cin,_costo);
         enrut.modificar(clave, _costo);
+
+
     }
 }
 

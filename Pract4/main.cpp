@@ -2,7 +2,7 @@
 #include "red.h"
 #include "funciones.h"
 int main()
-{
+{//este es
 
 
 
@@ -22,7 +22,7 @@ int main()
 
         while (menu_principal==0){
 
-            cout << "0.Salir\n1. Agregar enrutador\n2. Eliminar enrutador\n3. Cambiar costo de un enlace\n4. Visualizar la tabla del enrutador\n5. Visualizar la tabla de la red\n6. Precio del envio\n7. Camino eficiente\n8. Generar redes de forma aleatoria\n9. Cargar desde un .txt\nFavor ingresar una opcion: " ;
+            cout << "0. Salir\n1. Agregar enrutador\n2. Eliminar enrutador\n3. Cambiar costo de un enlace\n4. Visualizar la tabla del enrutador\n5. Visualizar la tabla de la red\n6. Precio del envio\n7. Camino eficiente\n8. Generar redes de forma aleatoria\n9. Cargar desde un .txt\nFavor ingresar una opcion: " ;
             cin>>entrada;
             while ((entrada<'0') || (entrada>'9')){
                 cout << "El valor no esta permitido, intente nuevamente  " ;  cin>>entrada;
@@ -36,29 +36,38 @@ int main()
                 if (entrada=='1'){
                     system("clear");
                     char _name;
-                    cout << "Ingrese el nombre de la red: "; cin >> _name;
-                    //AGREGAR VALIDACIÓN
+                    cout << "Ingrese el nombre del enrutador : "; cin >> _name;
+                    validar(_name);
                     global.agregar_enrutador(_name);
 
                     cout  << endl;
                 }
                 if (entrada=='2'){
                     char _name;
-                    cout << "Ingrese el nombre de la red: "; cin >> _name;
-                    //AGREGAR VALIDACIÓN
+                    cout << "Ingrese el nombre del enrutador : "; cin >> _name;
+                    validar(_name);
                     global.eliminar_enrutador(_name);
                     cout  << endl;
                 }
                 if (entrada=='3'){
-                    cout << "3  " ;
+                    char _name;
+                    cout << "Ingrese el nombre del enrutador que desea modificar: "; cin >> _name;
+                    validar(_name);
+                    global.modificar_enrutador(_name);
                     cout  << endl;
                 }
                 if (entrada=='4'){
-                    cout << "4  " ;
+                    char _name;
+                    cout << "Ingrese el nombre del enrutador que desea ver: "; cin >> _name;
+                    validar(_name);
+                    global.mostrar_tablaEnrutador(_name);
                     cout  << endl;
                 }
                 if (entrada=='5'){
-                    cout << "5  " ;
+                    char _name;
+                    cout << "Ingrese el nombre del enrutador que desea ver: "; cin >> _name;
+                    validar(_name);
+                    global.mostrar_tablaEnrutador(_name);
                     cout  << endl;
                 }
                 if (entrada=='6'){
