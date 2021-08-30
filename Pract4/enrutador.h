@@ -3,10 +3,14 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <cstdlib>
+#include <time.h>
+
 using namespace std;
 
 class enrutador
 {
+
 public:
     void agregar_nodo(char clave, int costo);
     void eliminar_nodo(char clave);

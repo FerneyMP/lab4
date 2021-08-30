@@ -1,6 +1,7 @@
 #include "enrutador.h"
 #include "red.h"
 #include "funciones.h"
+
 int main()
 {
     /*
@@ -24,10 +25,12 @@ int main()
 //------------------------------------              PROGRAMA            -------------------------------------------------------
 
     cout << "\tBienvenido! " << endl;
+
         char entrada;
-        int precio;
         short int menu_principal=0;
         string texto, nombre_ar;
+        float probabilidad;
+        int nodo;
 
         red global;
 
@@ -45,6 +48,7 @@ int main()
                     "\n9. Cargar desde un .txt"
                     "\nFavor ingresar una opcion: " ;
             cin>>entrada;
+
             while ((entrada<'0') || (entrada>'9')){
                 cout << "El valor no esta permitido, intente nuevamente  " ;  cin>>entrada;
            }
@@ -54,6 +58,7 @@ int main()
                     menu_principal =1;
                 }
 
+
                 if (entrada=='1'){
                     system("clear");
                     char _name;
@@ -62,6 +67,8 @@ int main()
                     global.agregar_enrutador(_name);
                     cout  << endl;
                 }
+
+
                 if (entrada=='2'){
                     system("clear");
                     char _name;
@@ -70,6 +77,8 @@ int main()
                     global.eliminar_enrutador(_name);
                     cout  << endl;
                 }
+
+
                 if (entrada=='3'){
                     system("clear");
                     char _name;
@@ -78,6 +87,7 @@ int main()
                     global.modificar_costoEnrutador(_name);
                     cout  << endl;
                 }
+
                 if (entrada=='4'){
                     system("clear");
                     char _name;
@@ -86,6 +96,8 @@ int main()
                     global.mostrar_tablaEnrutador(_name);
                     cout  << endl;
                 }
+
+
                 if (entrada=='5'){
                     system("clear");
                     char _name;
@@ -94,24 +106,78 @@ int main()
                     global.mostrar_red();
                     cout  << endl;
                 }
-                if (entrada=='6'){
+
+
+                if (entrada=='6'){//metodo de djstra?
                     cout << "6  " ;
                 }
+
+
                 if (entrada=='7'){
                     cout << "7  " ;
                     cout  << endl;
                 }
-                if (entrada=='8'){
-                    cout << "8  " ;
-                    cout  << endl;
-                }
-                if (entrada=='9'){
 
+
+                if (entrada=='8'){
+                    cout << "Ingrese un numero entre 2 y 54 para los nodos: "; cin >> nodo;
+                    validar(nodo);
+                    cout << "Ingrese un valor entre el 0 y el 1 para la probabilidad: "; cin >> probabilidad;
+                    validar(probabilidad); //poca probabilidad, pocos enlaces
+                    //booleano de forma aleatoria de acuerdo a la probabilidad y asi decidir cuales enlaces se mantienen
+                    srand(time(NULL)); //crear la semilla
+
+                            //-----------------------------------------------------------------------
+                            //implementar en las clases?
+
+                            map<char, map<char,int>>red; //matriz d adyacencia, red, se aplica operaciones
+                            map <char,int>fila;//representa lo que tiene una fila por dentro
+                            map<char, int >::iterator itCol; //iterador que recorra las columnas
+                            map<char, map<char, int >>:: iterator itRed; //iterador que recorra las filas de la red
+
+                            char name='A';
+                            int contador,contador_, enlaces;
+                            //generar matriz de ceros y -1
+
+                            //recorremos por filas y luego dentro de cada una de ellas
+                            for (int i=0;i<nodo;i++){//para inicializar nombres para filas y columnas
+                                for ( int j=0;j<nodo;j++){
+                                    if (i==j) fila.insert(pair<char,int>(name+j,0)); //i==j diagonal principal=0
+                                    else fila.insert(pair<char,int>(name+j,-1)); //clave y dato
+                            }
+                            red.insert(pair<char, map <char,int>>(name+i,fila));
+                            fila.clear();//eliminar la fila para poder ejecutar el ciclo
+                             }
+                            //recorrer triangulo superior de la matriz y refrejar en el opuesto
+                            //garantizar que todos los nodos tengan por lo menos una conexion
+                            for(itRed=red.begin(),contador=1; itRed!= red.end(); itRed++,contador++){ //ciclo doble que permita recorrer la red //A+1=B ...
+                                if (itRed!=red.begin() && contador_==0){//el it ya ejecuto el codigo por una vez, no se realizo ninguna conexion
+                                    contador--;
+                                    itRed--;//devolverse a la fila  anterior
+                                }
+                                contador_=0; //cada que se inicie un nuevo nodo se reinicia el contador
+                                for(itCol = itRed->second.find(name+contador); itCol!=itRed->second.end(); itCol++){//empieza a moverse desde la segunda clave ...
+                                      if (random(probabilidad)){ //probabilidad de los enlaces
+                                          enlaces=rand()%100+1;
+                                          itCol->second=enlaces; //al valor del mapa se le pasa un n aleatorio entre 1 y 100 del triangulo sup
+                                          red[itCol->first][itRed->first]=enlaces;// mapa intero,clave del externo en el momento para el triangulo inf
+                                          contador_++;
+                                      }
+                                  }
+                            }
+                            imprimir(red);
+                  }
+
+
+
+
+
+                if (entrada=='9'){
                     cout<<"Nombre del archivo fuente: "; cin>> nombre_ar;
                     texto=leer(nombre_ar+".txt");
                     cout<<texto;
                     cout<< endl<< endl;
-                    char n,m,p;
+                    /*char n,m,p;
                     for( int contador=0; texto[contador]!='\0';contador++){
                        for( int cont=0; texto[cont]!='\n';cont++){
                             n=texto[0];
@@ -123,11 +189,13 @@ int main()
                     }
                     cout << n;
                     cout << m ;
-                    cout << p ;
+                    cout << p ;*/
 
                 }
 
         }
+
+
 
     return 0;
 }

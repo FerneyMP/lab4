@@ -36,6 +36,3 @@ void enrutador::mostrar_tabla(char clave)
     }
 
 }
-
-
-
