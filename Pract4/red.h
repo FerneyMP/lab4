@@ -20,6 +20,10 @@ public:
     void eliminar_enrutador(char clave);    
     void modificar_costoEnrutador(char clave);
     void mostrar_red();
+    void agregar_enrutador_txt(char clave);
+    void asignar_enlaceEnrutador_txt(char clave, int peso);
+
+
 
     red();
 private:

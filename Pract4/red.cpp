@@ -90,6 +90,45 @@ void red::mostrar_red()
     }
 }
 
+void red::agregar_enrutador_txt(char clave)
+{
+    enrutador enrut; //Se instancia la clase enrutador
+    //char name;
+    int defecto = 0;
+    //Busca la clave designada dentro del mapa, si es igual a map::end, es porque no está y se puede agregar un nuevo valor
+    if(redes.find(clave)==redes.end()){
+        //De la clase enrutador se llama el método agregar_nodo para crear un nodo nuevo.
+        enrut.agregar_nodo(clave,defecto);
+        //Se agrega un nodo nuevo en la clase red mediante la función insert(dada por c++)
+        redes.insert(pair<char, enrutador>(clave,enrut));
+        //cout << "El enrutador " << clave << " ha sido creado correctamente..." << endl;
+    }
+}
+
+void red::asignar_enlaceEnrutador_txt(char clave, int peso)
+{
+    enrutador enruta;
+    int conexiones=0;
+    char captura;
+    if(redes.find(clave)!=redes.end()){
+        cout << "Ingrese el numero de conexiones del nodo: ";
+        cin>>conexiones;
+        //AGREGAR VALIDACION DE ENTEROS
+
+        for(int i=0; i<conexiones; i++){
+            cout << "Conexion #" << i+1 << ": ";
+            cin>>captura;
+            //AGREGAR VALIDACION de CHAR
+
+            if(redes.find(captura)!=redes.end()){
+            redes[clave].agregar_nodo(captura, peso);}
+            else{
+                cout << "El enlace no puede ser creado. El enrutador ingresado no existe." << endl;
+            }
+        }
+    }
+}
+
 red::red()
 {
 

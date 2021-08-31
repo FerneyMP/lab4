@@ -173,24 +173,39 @@ int main()
 
 
                 if (entrada=='9'){
-                    cout<<"Nombre del archivo fuente: "; cin>> nombre_ar;
-                    texto=leer(nombre_ar+".txt");
-                    cout<<texto;
-                    cout<< endl<< endl;
-                    /*char n,m,p;
-                    for( int contador=0; texto[contador]!='\0';contador++){
-                       for( int cont=0; texto[cont]!='\n';cont++){
-                            n=texto[0];
-                            m=texto[2];
-                            p=texto[4];
+                    cout<<"Nombre del archivo fuente: "; cin>> nombre_ar;            
+                    string datos,linea,nodo1,nodo2,peso;
+                    fstream text;
+                    int _peso;
+                    char _nodo1,_nodo2;
 
+                    nombre_ar=nombre_ar+".txt";
+                    text.open (nombre_ar,fstream::in);
+                    if (text.is_open()){ //true-abrio
+                           ifstream archivo(nombre_ar);
+                            while(getline(archivo, linea)){
+                                nodo1=linea.substr(0,1); //posicion y longitud
+                                nodo2=linea.substr(2,1);
+                                peso=linea.substr(4,linea.length()-4); //1 2 peso
 
+                                //agregar enrutadores y pesos
+                                //agregar a los otros enrutadores
+
+                                _nodo1=nodo1[0]; //obtener chars
+                                _nodo2=nodo2[0];
+                                _peso=atoi(peso.c_str()); //convertir str a int 1
+
+                                //cout<<_nodo1 << _nodo2 << _peso<<endl<<endl;
+
+                                validar(_nodo1);
+                                global.agregar_enrutador(_nodo1);
+                                global.asignar_enlaceEnrutador_txt(_nodo1, _peso);
+                                cout  << endl;
+
+                            }
                         }
-                    }
-                    cout << n;
-                    cout << m ;
-                    cout << p ;*/
-
+                        else cout<< "El archivo no pudo ser abierto "   <<endl;
+                        text.close();
                 }
 
         }

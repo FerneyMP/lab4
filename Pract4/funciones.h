@@ -2,7 +2,6 @@
 #define FUNCIONES_H
 #include "enrutador.h"
 
-string leer (string name);
 void validar(char &name);
 void validar(int &nodo);
 void validar(float &probabilidad);

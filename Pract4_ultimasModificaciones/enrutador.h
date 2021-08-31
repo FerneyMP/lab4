@@ -3,6 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <cstdlib>
+#include <time.h>
+
 using namespace std;
 
 class enrutador

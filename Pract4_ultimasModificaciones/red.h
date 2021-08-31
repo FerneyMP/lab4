@@ -29,6 +29,7 @@ public:
     void origen_destino();
 
     red();
+
 private:
    map<char, enrutador> redes; //Se crea un mapa de tipo(char, clase)
 
