@@ -186,16 +186,16 @@ void red::origen_destino()
     }
 }
 
-void red::eficiencia_origen_destino()
+/*void red::eficiencia_origen_destino()
 {
     /*! Qué necesito?
 
         1.) Conocer la tabla de enrutamiento de toda la red
         2.) Determinar por cuales enlaces es más "barato(eficiente)" para enviar el paquete
         3.) Imprimir dicho camino
-       */
 
-}
+
+}*/
 
 red::red()
 {
