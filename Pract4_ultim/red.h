@@ -1,6 +1,7 @@
 #ifndef RED_H
 #define RED_H
 #include "enrutador.h"
+#include "funciones.h"
 
 class red
 {
@@ -30,7 +31,11 @@ public:
     void origen_destino();
     void eficiencia_origen_destino();
 
+    void asignar_enlaceEnrutador_txt(char clave, char _nodo2, int costo );
 
+    void iterar_txt(char clave );
+
+    void random_red(int nodo, float probabilidad);
 
     red();
 private:

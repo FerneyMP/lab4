@@ -5,6 +5,7 @@
 #include <map>
 #include <cstdlib>
 #include <time.h>
+#include <vector>
 
 using namespace std;
 
@@ -18,6 +19,8 @@ public:
 
     void mirar_enrutadores_contiguos(char clave, char destino);
     void asignacion(char clave, char destino);
+
+    void agregar_nodo_txt(char clave, int costo);
 
 private:
     map<char, int> enrutadores;

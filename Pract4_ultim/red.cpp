@@ -66,17 +66,16 @@ void red::asignar_enlaceEnrutador(char clave)
 
 void red::mostrar_tablaEnrutador(char clave)
 {
-    map<char, enrutador>::iterator iterator; //Se hace uso del iterador que va servir para recorrer el mapa
-
-    enrutador enrut; //Se instancia la clase enrutador
-
+    map<char, enrutador>::iterator iterator=redes.begin(); //Se hace uso del iterador que va servir para recorrer el mapa
     if(redes.find(clave)!=redes.end()){ //Misma condición que en las anteriores funciones para revisar si la clave dada esta
         for(iterator=redes.begin(); iterator!=redes.end();iterator++){
             //Con este for se inicializa el iterator en la posición de inicio del mapa y se recorre todo
             //mientras llega al final de este
-            iterator->second.mostrar_tabla(clave); //Con iterator.second se "abre" la segunda posición del mapa
-            //cuya información contiene una clase, luego, se llama el método mostrar_tabla de dicha clase
-        }
+            if (iterator->first == clave){
+                iterator->second.mostrar_tabla(clave); //Con iterator.second se "abre" la segunda posición del mapa
+                //cuya información contiene una clase, luego, se llama el método mostrar_tabla de dicha clase
+            }
+      }
     }
 }
 
@@ -88,6 +87,7 @@ void red::eliminar_enrutador(char clave)
         redes.erase(clave);
         cout << "El enrutador " << clave << " ha sido eliminado correctamente..." << endl;
     }
+    else cout<< "El enrutador que desea eliminar no existe "<<endl;
 }
 
 void red::modificar_Enrutador(char clave)
@@ -133,8 +133,10 @@ void red::modificar_Enrutador(char clave)
                     getline(cin,costo_);
                     //Se ingresa en el mapa mediante la clave X, y se invoca la función modificar que pertenece a la clase enrutador
                     redes[clave].modificar(modificar, costo_, modo, captura);
+                    redes[captura].modificar(modificar, costo_, modo, clave);
                     cout << "Los enlaces han sido modificados correctamente..." << endl << endl;
                 }
+
 
                 else{//False: Modificar Enlaces
 
@@ -144,6 +146,7 @@ void red::modificar_Enrutador(char clave)
                     //AGREGAR VALIDACIÓN
                     if(redes.find(captura)!=redes.end()){//significa que existe
                         redes[clave].modificar(modificar, costo_, modo, captura);
+                        redes[captura].modificar(modificar, costo_, modo, clave);
                         }
             else{
                 cout << "El enrutador " << captura << " no ha sido creado." << endl;
@@ -197,6 +200,90 @@ void red::origen_destino()
 
 }*/
 
+void red::asignar_enlaceEnrutador_txt(char clave, char captura, int costo )//captura=_nodo2
+{
+    enrutador enruta;
+    //int conexiones=0;
+
+    if(redes.find(clave)!=redes.end()){
+            if(redes.find(captura)!=redes.end()){//Busca si el enrutador existe para poder asignar un enlace
+
+                redes[clave].agregar_nodo_txt(captura, costo);    // ----------------------------------------->        ✔
+
+                //ENLACE BIDIRECCIONAL, es decir, se tiene que asignar el segundo enlace también
+                redes[captura].agregar_nodo_txt(clave, costo);    // ----------------------------------------->        ✔
+                }
+
+            else{
+                cout << "El enlace no puede ser creado. El enrutador ingresado no existe." << endl;
+                }
+            }
+        }
+
+void red::iterar_txt(char clave )//captura=_nodo2
+{
+    enrutador enruta;
+    if(redes.find(clave)!=redes.end()){
+     //  if(redes.find(captura)!=redes.end()){//Busca si el enrutador existe para poder asignar un enlace
+            map<char, enrutador>::iterator it;
+            for(it=redes.begin(); it != redes.end(); it++){
+                    redes[clave].asignacion(clave,it->first);
+                   // redes[captura].asignacion(captura,it->first); // ----------------------------------------->        ✔
+                    }
+                }
+
+            else{
+                cout << "El enlace no puede ser creado. El enrutador ingresado no existe." << endl;
+    }
+}
+
+/*void red::random_red( int nodo, float probabilidad)
+{
+   //map<char, map<char,int>>redes;
+    map <char,int>fila;//representa lo que tiene una fila por dentro
+    map<char, int >::iterator itCol; //iterador que recorra las columnas
+    map<char, map<char, int >>:: iterator itRed; //iterador que recorra las filas de la red
+
+    enrutador enrut;
+    char b;
+
+    char name='A';
+    int contador,contador_, enlaces;
+    //generar matriz de ceros y -1
+
+    //recorremos por filas y luego dentro de cada una de ellas
+    for (int i=0;i<nodo;i++){//para inicializar nombres para filas y columnas
+        for ( int j=0;j<nodo;j++){
+            if (i==j) fila.insert(pair<char,int>(name+j,0)); //i==j diagonal principal=0
+            else fila.insert(pair<char,int>(name+j,-1)); //clave y dato
+        }
+    redes.insert(pair<char, enrutador>(b,fila));
+
+
+    //redes.insert(pair<char,enrutadores>(name+i,fila));
+    fila.clear();//eliminar la fila para poder ejecutar el ciclo
+    }
+
+    //recorrer triangulo superior de la matriz y refrejar en el opuesto
+    //garantizar que todos los nodos tengan por lo menos una conexion
+    for(itRed=redes.begin(),contador=1; itRed!= redes.end(); itRed++,contador++){ //ciclo doble que permita recorrer la red //A+1=B ...
+        if (itRed!=redes.begin() && contador_==0){//el it ya ejecuto el codigo por una vez, no se realizo ninguna conexion
+            contador--;
+            itRed--;//devolverse a la fila  anterior
+        }
+        contador_=0; //cada que se inicie un nuevo nodo se reinicia el contador
+        for(itCol = itRed->second.find(name+contador); itCol!=itRed->second.end(); itCol++){//empieza a moverse desde la segunda clave ...
+              if (random(probabilidad)){ //probabilidad de los enlaces
+                  enlaces=rand()%100+1;
+                  itCol->second=enlaces; //al valor del mapa se le pasa un n aleatorio entre 1 y 100 del triangulo sup
+                  redes[itCol->first][itRed->first]=enlaces;// mapa intero,clave del externo en el momento para el triangulo inf
+                  contador_++;
+              }
+          }
+    }
+    imprimir(redes);
+}
+*/
 red::red()
 {
 

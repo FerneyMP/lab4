@@ -1,5 +1,6 @@
 #include "enrutador.h"
 
+
 void enrutador::agregar_nodo(char clave, int costo)
 {
     if(enrutadores.find(clave)==enrutadores.end()){ // revisa si un elemento existe dentro de un mapa, el .find() retorna un .end()
@@ -105,18 +106,12 @@ void enrutador::asignacion(char clave, char destino)
 }
 
 
-/*
-void enrutador::asignacion(char clave)
+void enrutador::agregar_nodo_txt(char clave, int costo)
 {
-    map<char, int>::iterator ite;
-    int costo = -1;
-    if(enrutadores.find(clave)!=enrutadores.end()){
-        for(ite = enrutadores.begin(); ite != enrutadores.end(); ite++){
-            if(enrutadores[clave] != ite->first){
-                enrutadores.insert(pair<char, int>(ite->first,costo));
-            }
-        }
+   map<char, int>::iterator it;
+   if(enrutadores.find(clave)==enrutadores.end()){ // revisa si un elemento existe dentro de un mapa, el .find() retorna un .end()
+        //si no encuentra dicho mapa con clave tal, significa que que no existe el mapa y permite continuar con el condicional.
+        enrutadores.insert(pair<char, int>(clave,costo)); //Agrega un nuevo elemento dentro del contenedor.
     }
-}*/
-
-
+    else  enrutadores[clave] =costo;//if (enrutadores[clave] == -1){
+}
