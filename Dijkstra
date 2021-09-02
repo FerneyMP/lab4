@@ -1,0 +1,61 @@
+EN CLASE RED: red.h
+	void dijsktra(char clave_origen, char destino);
+
+void red::dijsktra(char clave_origen, char destino)
+{
+   /* map<char, enrutador>::iterator it;
+    for(it=redes.begin(); it != redes.end(); it++){
+        //redes[clave].asignacion(it->first);
+        redes[clave].asignacion(clave,it->first);  // ----------------------------------------->        ✔
+        }
+    }*/
+    //AGREGAR DESTINO POR CONSOLA
+    bool fin = false;
+    map<char, enrutador>::iterator iterator;
+    for(iterator = redes.find(clave_origen+1); iterator != redes.end(); iterator++){
+        redes[clave_origen+1].asistenteDijkstra(clave_origen, iterator->first, destino, fin);
+        if (fin == true){
+            break;
+        }
+    }
+}
+
+
+
+EN CLASE ENRUTADOR: enrutador.h :
+	void asistenteDijkstra(char clave_origen, char iterador, char destino, bool &fin);
+
+void enrutador::asistenteDijkstra(char clave_origen, char iterador, char destino, bool &fin)
+{
+    map<char, int>::iterator asiste;
+    //int almacenador=0;
+    for(asiste = enrutadores.find(clave_origen); asiste != enrutadores.end(); asiste++){
+        if(enrutadores.find(iterador) != enrutadores.end()){
+            if(asiste->second == -1 || asiste->second ==0){
+                ;
+            }
+            else{
+            int acumulador = enrutadores[asiste->first];
+            char acumulador2 = asiste->first;
+            if(asiste->second < (asiste->second+1)){//PENSAR EN CORREGIR ESTO
+                cout << "Los caminos mas eficientes son: " << endl;
+                cout << acumulador << " ---> " << acumulador2 << endl;
+                acumulador = acumulador + asiste->second;
+                acumulador2 -= asiste -> first;
+                if(asiste->first == destino){
+                    fin = true;
+                    break;
+                    }
+                }
+            }
+            /*
+             if(asiste->second <= enrutadores[asiste->first] ){
+                cout << "Los caminos mas eficientes son: " << endl;
+                acumulador += enrutadores[asiste->first];
+                cout << acumulador << " ---> " << asiste->first << endl;
+
+            }*/
+        }
+    }
+}
+
