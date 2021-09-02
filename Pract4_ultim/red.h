@@ -37,6 +37,8 @@ public:
 
     void random_red(int nodo, float probabilidad);
 
+    void dijsktra(char clave_origen, char destino);
+
     red();
 private:
    map<char, enrutador> redes; //Se crea un mapa de tipo(char, clase)

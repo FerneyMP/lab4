@@ -24,6 +24,8 @@ public:
 
     void agregar_nodo_txt(char clave, int costo);
 
+    void asistenteDijkstra(char clave_origen, char iterador, char destino, bool &fin);
+
 private:
     map<char, int> enrutadores;
 

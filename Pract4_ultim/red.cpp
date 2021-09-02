@@ -210,15 +210,16 @@ void red::iterar_txt(char clave )//captura=_nodo2
     }
 }
 
-/*void red::random_red( int nodo, float probabilidad)
+
+
+void red::random_red( int nodo, float probabilidad)
 {
-   //map<char, map<char,int>>redes;
+    map<char, map<char,int>>redes;
     map <char,int>fila;//representa lo que tiene una fila por dentro
     map<char, int >::iterator itCol; //iterador que recorra las columnas
     map<char, map<char, int >>:: iterator itRed; //iterador que recorra las filas de la red
 
     enrutador enrut;
-    char b;
 
     char name='A';
     int contador,contador_, enlaces;
@@ -230,7 +231,7 @@ void red::iterar_txt(char clave )//captura=_nodo2
             if (i==j) fila.insert(pair<char,int>(name+j,0)); //i==j diagonal principal=0
             else fila.insert(pair<char,int>(name+j,-1)); //clave y dato
         }
-    redes.insert(pair<char, enrutador>(b,fila));
+    redes.insert(pair<char, map<char,int>>(name+i,fila));
 
 
     //redes.insert(pair<char,enrutadores>(name+i,fila));
@@ -256,7 +257,28 @@ void red::iterar_txt(char clave )//captura=_nodo2
     }
     imprimir(redes);
 }
-*/
+
+void red::dijsktra(char clave_origen, char destino)
+{
+   /* map<char, enrutador>::iterator it;
+    for(it=redes.begin(); it != redes.end(); it++){
+        //redes[clave].asignacion(it->first);
+        redes[clave].asignacion(clave,it->first);  // ----------------------------------------->        ✔
+        }
+    }*/
+    //AGREGAR DESTINO POR CONSOLA
+    bool fin = false;
+    map<char, enrutador>::iterator iterator;
+    for(iterator = redes.find(clave_origen+1); iterator != redes.end(); iterator++){
+        redes[clave_origen+1].asistenteDijkstra(clave_origen, iterator->first, destino, fin);
+        if (fin == true){
+            break;
+        }
+    }
+}
+
+
+
 red::red()
 {
 

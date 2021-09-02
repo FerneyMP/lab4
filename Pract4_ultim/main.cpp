@@ -130,7 +130,12 @@ int main()
 
                 if (entrada=='7'){
                     system("clear");
-                    cout << "7  " ;
+                    char clave_O, clave_D;
+                    cout<<"ingrese la clave origen: "; cin>> clave_O;
+                    cout<<"ingrese la clave origen: "; cin>> clave_D;
+                    validar(clave_O);
+                    validar(clave_D);
+                    global.dijsktra( clave_O,  clave_D);
                     cout  << endl;
                 }
 
@@ -141,6 +146,8 @@ int main()
                     validar(probabilidad); //poca probabilidad, pocos enlaces
                     //booleano de forma aleatoria de acuerdo a la probabilidad y asi decidir cuales enlaces se mantienen
                     srand(time(NULL)); //crear la semilla
+                    global.random_red( nodo,  probabilidad);
+
                 }
 
                 if (entrada=='9'){ // -----------------------------------------------------  ☑

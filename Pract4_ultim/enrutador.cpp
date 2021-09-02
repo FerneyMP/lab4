@@ -135,3 +135,38 @@ void enrutador::agregar_nodo_txt(char clave, int costo)
     }
     else  enrutadores[clave] =costo;
 }
+
+
+void enrutador::asistenteDijkstra(char clave_origen, char iterador, char destino, bool &fin)
+{
+    map<char, int>::iterator asiste;
+    //int almacenador=0;
+    for(asiste = enrutadores.find(clave_origen); asiste != enrutadores.end(); asiste++){
+        if(enrutadores.find(iterador) != enrutadores.end()){
+            if(asiste->second == -1 || asiste->second ==0){
+                ;
+            }
+            else{
+            int acumulador = enrutadores[asiste->first];
+            char acumulador2 = asiste->first;
+            if(asiste->second < (asiste->second+1)){//PENSAR EN CORREGIR ESTO
+                cout << "Los caminos mas eficientes son: " << endl;
+                cout << acumulador << " ---> " << acumulador2 << endl;
+                acumulador = acumulador + asiste->second;
+                acumulador2 -= asiste -> first;
+                if(asiste->first == destino){
+                    fin = true;
+                    break;
+                    }
+                }
+            }
+            /*
+             if(asiste->second <= enrutadores[asiste->first] ){
+                cout << "Los caminos mas eficientes son: " << endl;
+                acumulador += enrutadores[asiste->first];
+                cout << acumulador << " ---> " << asiste->first << endl;
+
+            }*/
+        }
+    }
+}
